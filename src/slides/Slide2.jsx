@@ -2,7 +2,7 @@ import React from 'react';
 import CyberPanel from '../components/ui/CyberPanel';
 
 const Slide2 = () => (
-     <div className="slide">
+     <div className="w-full h-full">
           <h2 className="text-4xl text-[#ffcc33] mb-8 border-l-4 border-[#ff007f] pl-4">КОМАНДА ЕДИНОМЫШЛЕННИКОВ</h2>
           <div className="slide-content grid grid-cols-12 gap-6">
                <CyberPanel className="col-span-6 p-6">

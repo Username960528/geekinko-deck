@@ -2,7 +2,7 @@ import React from 'react';
 import GlitchText from '../components/ui/GlitchText';
 
 const Slide7 = () => (
-     <div className="slide">
+     <div className="w-full h-full">
           <h2 className="text-4xl text-[#ffcc33] mb-8 border-l-4 border-[#ff007f] pl-4">ИСПОЛЬЗОВАНИЕ СРЕДСТВ</h2>
           <div className="slide-content flex gap-12 items-center h-full">
                <div className="w-1/2">

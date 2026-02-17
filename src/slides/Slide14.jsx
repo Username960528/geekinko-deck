@@ -2,7 +2,7 @@ import React from 'react';
 import CyberPanel from '../components/ui/CyberPanel';
 
 const Slide14 = () => (
-     <div className="slide">
+     <div className="w-full h-full">
           <h2 className="text-4xl text-[#ffcc33] mb-8 border-l-4 border-[#ff007f] pl-4">ПОРТРЕТ КЛИЕНТА</h2>
           <div className="slide-content flex gap-8 items-center">
                <div className="w-1/3">

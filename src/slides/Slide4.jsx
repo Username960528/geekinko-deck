@@ -3,7 +3,7 @@ import GlitchText from '../components/ui/GlitchText';
 import CyberPanel from '../components/ui/CyberPanel';
 
 const Slide4 = () => (
-     <div className="slide">
+     <div className="w-full h-full">
           <div className="absolute inset-0 z-0 opacity-20 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=2508&auto=format&fit=crop')" }}></div>
           <div className="relative z-10 h-full flex flex-col justify-center max-w-4xl mx-auto">
                <h2 className="text-6xl text-white mb-6">

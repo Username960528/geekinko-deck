@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Slide5 = () => (
-     <div className="slide">
+     <div className="w-full h-full">
           <h2 className="text-4xl text-[#ffcc33] mb-8 border-l-4 border-[#ff007f] pl-4">ДИНАМИКА КОМПАНИИ</h2>
           <div className="grid grid-cols-2 gap-8 slide-content">
                <div className="space-y-4">

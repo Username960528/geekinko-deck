@@ -3,7 +3,7 @@ import GlitchText from '../components/ui/GlitchText';
 import CyberPanel from '../components/ui/CyberPanel';
 
 const Slide8 = () => (
-     <div className="slide">
+     <div className="w-full h-full">
           <h2 className="text-4xl text-[#ffcc33] mb-8 border-l-4 border-[#ff007f] pl-4">ЛОГИКА РОСТА & ROI</h2>
           <div className="slide-content grid grid-cols-2 gap-12">
                <div className="space-y-8">

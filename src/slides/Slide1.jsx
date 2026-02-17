@@ -2,7 +2,7 @@ import React from 'react';
 import GlitchText from '../components/ui/GlitchText';
 
 const Slide1 = () => (
-     <div className="slide active flex items-center justify-center">
+     <div className="flex items-center justify-center w-full h-full">
           <div className="text-center z-10">
                <div className="inline-block border border-[#ff7700] px-4 py-1 mb-8 text-[#ff7700] text-sm tracking-[0.3em]">
                     CONFIDENTIAL PROJECT

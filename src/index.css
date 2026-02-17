@@ -165,3 +165,47 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+
+@media print {
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+
+  body {
+    background-color: #050505 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .slide {
+    opacity: 1 !important;
+    position: relative !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    page-break-after: always !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: 10 !important;
+  }
+
+  /* Hide UI controls in print */
+  button,
+  .cyber-btn {
+    display: none !important;
+  }
+
+  /* Ensure background effects are visible or hidden depending on preference. 
+     Keeping them might be heavy/glitchy in PDF, but 'as requested' implies visual fidelity.
+     Fixed position elements (scanlines, noise) will only print on the first page or cover everything.
+     Since we want them on every slide, we might need them to be part of the slide or just accept standard behavior.
+     Standard behavior for fixed background usually prints on every page if supported, or just first.
+  */
+
+  /* Make header/footer sticky or fixed? Fixed repeats on every page in PDF. */
+  .fixed {
+    position: fixed !important;
+  }
+}

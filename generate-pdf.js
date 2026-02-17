@@ -40,6 +40,9 @@ async function generatePDF() {
           const page = await browser.newPage();
           await page.setViewport({ width: 1920, height: 1080 });
 
+          // Force screen media type so @media print styles DON'T apply
+          await page.emulateMediaType('screen');
+
           console.log('Navigating to page...');
           await page.goto('http://localhost:4173/geekinko-deck/', {
                waitUntil: 'networkidle0',
@@ -54,9 +57,13 @@ async function generatePDF() {
           });
           console.log(`Found ${totalSlides} slides`);
 
-          // Create temporary directory for individual PDFs
-          const tmpDir = path.join(process.cwd(), '.tmp-pdfs');
-          if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
+          // Create the PDF document
+          const pdfDoc = await PDFDocument.create();
+
+          // Width/height in PDF points (72 points = 1 inch)
+          // 1920x1080 pixels at 72 DPI
+          const pageWidth = 1920;
+          const pageHeight = 1080;
 
           for (let i = 0; i < totalSlides; i++) {
                console.log(`Capturing slide ${i + 1}/${totalSlides}...`);
@@ -72,45 +79,38 @@ async function generatePDF() {
                     await new Promise(resolve => setTimeout(resolve, 800));
                }
 
-               // Generate single-page PDF for this slide
-               await page.pdf({
-                    path: path.join(tmpDir, `slide_${i}.pdf`),
-                    width: '1920px',
-                    height: '1080px',
-                    printBackground: true,
-                    pageRanges: '1'
+               // Take a SCREENSHOT (uses screen media, not print!)
+               const screenshotBuffer = await page.screenshot({
+                    type: 'png',
+                    clip: { x: 0, y: 0, width: 1920, height: 1080 }
+               });
+
+               // Embed the PNG into the PDF
+               const pngImage = await pdfDoc.embedPng(screenshotBuffer);
+               const pdfPage = pdfDoc.addPage([pageWidth, pageHeight]);
+               pdfPage.drawImage(pngImage, {
+                    x: 0,
+                    y: 0,
+                    width: pageWidth,
+                    height: pageHeight,
                });
           }
 
-          // Merge all PDFs
-          console.log('Merging PDFs...');
-          const mergedPdf = await PDFDocument.create();
-
-          for (let i = 0; i < totalSlides; i++) {
-               const pdfPath = path.join(tmpDir, `slide_${i}.pdf`);
-               const pdfBytes = fs.readFileSync(pdfPath);
-               const pdf = await PDFDocument.load(pdfBytes);
-               const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-               copiedPages.forEach(p => mergedPdf.addPage(p));
-          }
-
-          const mergedBytes = await mergedPdf.save();
+          // Save the merged PDF
+          const pdfBytes = await pdfDoc.save();
           const outputPath = path.join(process.cwd(), 'public', 'geekinko_investor_deck.pdf');
-          fs.writeFileSync(outputPath, mergedBytes);
-          console.log(`PDF generated successfully: ${outputPath}`);
-          console.log(`Total pages: ${totalSlides}`);
+          fs.writeFileSync(outputPath, pdfBytes);
 
-          // Cleanup
-          fs.rmSync(tmpDir, { recursive: true });
+          const sizeMB = (pdfBytes.length / 1024 / 1024).toFixed(2);
+          console.log(`PDF generated: ${outputPath}`);
+          console.log(`Total pages: ${totalSlides}, Size: ${sizeMB} MB`);
 
           await browser.close();
      } catch (error) {
           console.error('Error generating PDF:', error);
      } finally {
           console.log('Stopping server...');
-          try {
-               process.kill(-server.pid);
-          } catch (e) {
+          try { process.kill(-server.pid); } catch (e) {
                try { server.kill(); } catch (e2) { /* ignore */ }
           }
           process.exit(0);

@@ -8,11 +8,11 @@ const Slide17 = () => (
 
                <div className="space-y-6 ml-12">
                     {[
-                         { text: '1. Узнает из Telegram/TikTok (гейминг, косплей).', color: '#ff7700' },
-                         { text: '2. Переходит на сайт. Цепляет стиль, персонажи, общение с ботом.', color: '#ff7700' },
+                         { text: '1. Узнает из Telegram/TikTok (гейминг, косплей).', color: '#ffcc33' },
+                         { text: '2. Переходит на сайт. Цепляет стиль, персонажи, общение с ботом.', color: '#ffaa00' },
                          { text: '3. Изучает функционал и технологии.', color: '#ff7700' },
-                         { text: '4. Скачивает приложение (MVP).', color: '#ff7700', highlight: true },
-                         { text: '5. Выбирает игрушку (Артефакт).', color: '#ff7700' },
+                         { text: '4. Скачивает приложение (MVP).', color: '#ff4400', highlight: true },
+                         { text: '5. Выбирает игрушку (Артефакт).', color: '#ff0055' },
                          { text: '6. ПОКУПКА & ИСПОЛЬЗОВАНИЕ (Retention через ИИ).', color: '#ff007f', highlight: true, large: true },
                          { text: '7. Advocacy: Делится впечатлениями.', color: '#00f3ff' }
                     ].map((item, idx) => (
@@ -22,9 +22,9 @@ const Slide17 = () => (
                                    style={{
                                         left: '-34px',
                                         top: '4px',
-                                        backgroundColor: item.color.startsWith('#') ? item.color : undefined,
-                                        borderColor: item.highlight ? '#ffcc33' : '#9ca3af',
-                                        boxShadow: item.highlight ? `0 0 ${item.large ? '15px' : '10px'} ${item.color}` : 'none'
+                                        backgroundColor: item.color,
+                                        borderColor: item.color,
+                                        boxShadow: `0 0 ${item.large ? '15px' : item.highlight ? '10px' : '6px'} ${item.color}`
                                    }}
                               ></div>
                               <p

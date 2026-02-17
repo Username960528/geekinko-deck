@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Slide1 from './slides/Slide1';
@@ -22,39 +22,45 @@ import Slide17 from './slides/Slide17';
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const slides = [
-    <Slide1 key={0} />,
-    <Slide2 key={1} />,
-    <Slide3 key={2} />,
-    <Slide4 key={3} />,
-    <Slide5 key={4} />,
-    <Slide6 key={5} />,
-    <Slide7 key={6} />,
-    <Slide8 key={7} />,
-    <Slide9 key={8} />,
-    <Slide10 key={9} />,
-    <Slide11 key={10} />,
-    <Slide12 key={11} />,
-    <Slide13 key={12} />,
-    <Slide14 key={13} />,
-    <Slide15 key={14} />,
-    <Slide16 key={15} />,
-    <Slide17 key={16} />
-  ];
+  // Memoize slides to prevent unnecessary re-renders
+  const slides = useMemo(() => [
+    <Slide1 key="s1" />,
+    <Slide2 key="s2" />,
+    <Slide3 key="s3" />,
+    <Slide4 key="s4" />,
+    <Slide5 key="s5" />,
+    <Slide6 key="s6" />,
+    <Slide7 key="s7" />,
+    <Slide8 key="s8" />,
+    <Slide9 key="s9" />,
+    <Slide10 key="s10" />,
+    <Slide11 key="s11" />,
+    <Slide12 key="s12" />,
+    <Slide13 key="s13" />,
+    <Slide14 key="s14" />,
+    <Slide15 key="s15" />,
+    <Slide16 key="s16" />,
+    <Slide17 key="s17" />
+  ], []);
 
   const totalSlides = slides.length;
 
   const handleNext = useCallback(() => {
-    setCurrentSlide(prev => (prev < totalSlides - 1 ? prev + 1 : prev));
+    setCurrentSlide(prev => {
+      if (prev < totalSlides - 1) return prev + 1;
+      return prev;
+    });
   }, [totalSlides]);
 
   const handlePrev = useCallback(() => {
-    setCurrentSlide(prev => (prev > 0 ? prev - 1 : prev));
+    setCurrentSlide(prev => {
+      if (prev > 0) return prev - 1;
+      return prev;
+    });
   }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ignore key events if modifier keys are pressed (e.g. Cmd+R)
       if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
 
       if (e.key === 'ArrowRight' || e.key === ' ') {
@@ -69,10 +75,10 @@ const App = () => {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [currentSlide, handleNext, handlePrev]);
+  }, [handleNext, handlePrev]);
 
   return (
-    <div className="relative w-full h-screen bg-[#050505] text-white overflow-hidden">
+    <div className="relative w-full h-screen bg-[#050505] text-white overflow-hidden" id="app-root">
       {/* Background effects */}
       <div className="scanlines"></div>
       <div className="noise"></div>
@@ -88,7 +94,11 @@ const App = () => {
 
       <div id="deck-container" className="relative w-full h-full">
         {slides.map((slide, idx) => (
-          <div key={idx} className={`slide ${idx === currentSlide ? 'active' : ''}`}>
+          <div
+            key={idx}
+            className={`slide ${idx === currentSlide ? 'active' : ''}`}
+            data-index={idx}
+          >
             {slide}
           </div>
         ))}

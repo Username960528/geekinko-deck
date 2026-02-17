@@ -8,9 +8,9 @@ const Slide17 = () => (
 
                <div className="space-y-6 ml-12">
                     {[
-                         { text: '1. Узнает из Telegram/TikTok (гейминг, косплей).', color: 'gray-600' },
-                         { text: '2. Переходит на сайт. Цепляет стиль, персонажи, общение с ботом.', color: 'gray-600' },
-                         { text: '3. Изучает функционал и технологии.', color: 'gray-600' },
+                         { text: '1. Узнает из Telegram/TikTok (гейминг, косплей).', color: '#ff7700' },
+                         { text: '2. Переходит на сайт. Цепляет стиль, персонажи, общение с ботом.', color: '#ff7700' },
+                         { text: '3. Изучает функционал и технологии.', color: '#ff7700' },
                          { text: '4. Скачивает приложение (MVP).', color: '#ff7700', highlight: true },
                          { text: '5. Выбирает игрушку (Артефакт).', color: '#ff7700' },
                          { text: '6. ПОКУПКА & ИСПОЛЬЗОВАНИЕ (Retention через ИИ).', color: '#ff007f', highlight: true, large: true },
